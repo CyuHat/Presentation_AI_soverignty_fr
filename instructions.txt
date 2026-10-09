@@ -1,0 +1,434 @@
+ J'ai lu le fichier index.qmd. Il s'agit d'une présentation Reveal.js en français sur la protection des données dans
+ l'IA. Je dois :
+
+ 1. Remplacer le "tu" par "on" ou "vous" (impersonnel ou formel)
+ 2. Certaines notions clés resteront en anglais
+ 3. Ajouter .scrollable aux slides élongées
+
+ J'ai identifié plusieurs slides qui semblent élongées :
+ - "Axe 2 : la conservation" avec 6 points
+ - "Résumé" (déjà a .scrollable)
+ - Peut-être aussi "Trois axes, une carte" avec beaucoup de texte
+
+ Et en fait, il y a beaucoup de "tu" partout. Je vais parcourir le document et faire les changements.
+
+ Concepts clés qui devraient rester en anglais ou être notés :
+ - "Default option" -> "option par défaut" est déjà en français, mais il dit "some key concepts are better in
+   english". Je dois identifier lesquels. Peut-être :
+     - "option par défaut" -> est bien en français
+     - "Consentement silencieux" -> "silent consent" ou "opt-out by default"
+     - "Souveraineté des données" -> "Data sovereignty" (mais c'est le titre)
+     - "Profilage" -> "profiling"
+     - "Entraînement" -> "training"
+     - "Conservation zéro" -> "zero retention"
+     - "Open-source" déjà en anglais
+     - "Poids ouverts" -> "open weights"
+     - "Cloud Act" -> reste en anglais
+     - "Routeurs et passerelles" -> "Routers and gateways" ou garder ?
+
+ Mais l'utilisateur dit explicitement "Some key concepts are better in english" et "go for the simplest answer when
+ in doubt". Donc je vais :
+ - Garder les termes techniques anglais quand ils sont plus clairs
+ - Par exemple : "zero retention" au lieu de "conservation zéro", "open weights" au lieu de "poids ouverts",
+   "training" au lieu d'entraînement, "profiling", "vendor lock-in", etc.
+
+ Mais en fait, c'est une présentation en français. Les concepts "better in english" sont probablement ceux que
+ l'audience technique connait mieux en anglais. Je vais faire un jugement sur les termes suivants :
+
+ Restons en français :
+ - Souveraineté des données, souveraineté technologique
+ - Option par défaut, réglage par défaut
+ - Données sensibles
+ - Juridiction
+
+ Mettons en anglais (ou gardons anglais) :
+ - "Vendor lock-in" (au lieu de verrouillage par fournisseur/constructeur)
+ - "Open weights" (plutôt que poids ouverts)
+ - "Zero retention" (plutôt que conservation zéro)
+ - "Benchmark gaming" déjà en anglais
+ - "Cloud Act" déjà en anglais
+ - "Fine-tuning" (plutôt que affiner/paramétrage fin)
+ - "Bring Your Own Model" ou "BYOM" déjà présent
+ - "API" et "GPU" déjà en anglais
+ - "Stack" peut-être ?
+ - "One-stop-shop" déjà en anglais
+ - "Opt-out" (plutôt que désabonnement/se désinscrire)
+
+ Hmm, je dois être prudent. Le user dit "go for the simplest answer". Je vais faire les changements les plus
+ évidents :
+
+ 1. Remplacer "tu" par "on/vous" (principalement "on" car c'est impersonnel)
+ 2. Garder en anglais les termes techniques clairs
+ 3. Ajouter .scrollable aux slides longues
+
+ Slides potentiellement trop longues (besoin de scrollable) :
+ - "Axe 2 : la conservation" (la dernière itération a 6 points avec fragments)
+ - "Résumé" (déjà a .scrollable)
+ - "Deux catégories d'utilisateurs" (tableau avec du texte, peut-être ok)
+ - "Panorama des services d'IA" (5 items, peut-être ok)
+ - "Jalons à mi-2026" (assez court)
+ - "Limites" (3 items, courts)
+ - Les slides avec auto-animate="true" ne devraient PAS avoir .scrollable car cela pourrait casser l'animation.
+
+ Je vais ajouter .scrollable à :
+ - "Axe 2 : la conservation {auto-animate="true"}" -> NON, auto-animate et scrollable ne vont pas ensemble. Mais en
+   fait, la dernière slide avec 6 points est longue. Les auto-animate slides sont multiples slides avec le même
+   titre. La dernière n'a pas de fragment pour la faire apparaître progressivement, donc tous les points
+   s'affichent. Je pourrais mettre .scrollable sur la dernière itération de "Axe 2 : la conservation".
+
+ Voyons les longues :
+ - Slide "Pourquoi surveiller tes données à l'ère de l'IA ?" -> 3 items, pas si long
+ - Slide "Octobre 2025 : étude de Stanford" -> 3 citations + un texte, peut-être ok
+ - Slide "Les débuts" -> a une image et du texte, pas si long
+ - Slide "Axe 3 : la juridiction (4)" -> un peu de texte, ok
+ - Slide "Limites" -> 3 points, ok
+
+ La plus longue visiblement est la série "Axe 2 : la conservation" ou la série "Trois axes, une carte". Pour
+ auto-animate, on ne devrait pas mettre scrollable car ça casse. Mais je peux réduire le contenu... non, je dois
+ juste mettre .scrollable quand c'est pertinent.
+
+ En fait, le user dit "Some slides are élong so it might be a good idea to put some {.scrollable} element to them".
+ Je vais identifier les slides qui sont clairement trop longues :
+ - "Résumé" -> déjà .scrollable
+ - "Axe 2 : la conservation {auto-animate="true"}" (la dernière avec 6 points) -> c'est long. Mais auto-animate +
+   scrollable ? En Reveal.js + Quarto, cela peut fonctionner mais c'est risqué. Je vais mettre .scrollable sur la
+   dernière version de cette slide.
+ - "Trois axes, une carte {auto-animate="true"}" (la dernière avec texte sur propriété intellectuelle) -> c'est
+   assez long.
+ - "1. Auto-hébergé {auto-animate="true"}" (la dernière avec les ressources web) -> c'est long avec plein de liens.
+ - "2. Cloud européen complet {auto-animate="true"}" (la dernière avec la liste de liens) -> très longue avec plein
+   de liens.
+ - "3. Néoclouds GPU", "4. Routeurs...", "5. Hyperscaleurs..." -> les dernières itérations avec les liens sont un
+   peu longues mais peut-être ok.
+ - "Axe 3 : la juridiction (4)" -> pas si long.
+
+ En fait, les slides avec les longues listes de liens sont problématiques. Ajoutons .scrollable aux slides finales
+ de séries auto-animate qui ont du contenu dense.
+
+ Mais attendons, comment fonctionne auto-animate="true" dans Quarto revealjs ? Ce sont des slides successives avec
+ le même titre et l'attribut auto-animate="true". Mettre .scrollable sur l'une d'elles pourrait être tricky. En
+ fait, il vaut mieux mettre .scrollable sur les slides qui sont clairement des "mur de texte".
+
+ Regardons de nouveau :
+ - Slide "Axe 2 : la conservation" (dernière version, celle avec 6 points) -> mettre {.scrollable} après le titre.
+ - Slide "1. Auto-hébergé" (dernière version avec la liste de liens) -> mettre {.scrollable}.
+ - Slide "2. Cloud européen complet" (dernière version avec la liste de liens) -> mettre {.scrollable}.
+ - Slide "Résumé" -> déjà fait.
+ - Slide "Panorama des services d'IA" -> 5 items fragmentés, pas si long.
+
+ Cependant, il y a un problème avec auto-animate. Si je change le titre en ajoutant {.scrollable}, cela change le
+ titre et l'auto-animate risque de ne pas fonctionner car le titre ne correspond plus exactement? En fait dans
+ Quarto revealjs, le titre est le texte avant les accolades. {.scrollable} est un attribut de la slide (un class),
+ donc le titre reste le même.
+
+ Mais pour auto-animate, les éléments doivent correspondre entre les slides. Le contenu de la slide change. Mettre
+ .scrollable sur la dernière slide de la série devrait être ok car cela ajoute juste un conteneur scrollable.
+
+ Bon, je fais mes changements. Le plus gros travail c'est le "tu" -> "on/vous" et les termes anglais.
+
+ Plan d'action :
+
+ Terminologie (garder ou mettre en anglais quand c'est mieux) :
+ - "poids ouverts" -> "open weights" (terme technique standard)
+ - "conservation zéro" -> "zero retention" (plus clair en anglais dans ce contexte technique)
+ - "entraînement" -> garder "training" dans certains contextes, ou "entraînement" si déjà bien compris. "Utilisation
+   des données pour l'entraînement" -> "utilisation des données pour le training" ? Un peu étrange. Gardons
+   "entraînement" en français car c'est très courant.
+ - "profilage" -> "profiling" (terme technique)
+ - "verrouillage par fournisseur" -> "vendor lock-in" (terme standard)
+ - "option par défaut" -> c'est bien en français, mais le titre "Le piège de l'option par défaut" devient "Le piège
+   du default"? Non, "option par défaut" est bien en français.
+ - "passerelles" -> "gateways" ? Ou garder. "Routeurs et passerelles" -> "Routers and gateways"
+ - "auto-hébergé" -> "self-hosted"
+ - "Cloud européen complet" -> "Full European Cloud"
+ - "Néoclouds GPU" -> "GPU Neoclouds" ou garder
+ - "Hyperscaleurs masqués" -> "Masked Hyperscalers" ou "Sovereign-washed hyperscalers"
+
+ En fait, je dois trouver un équilibre. Je vais faire les substitutions les plus évidentes :
+
+ - "Poids ouverts" -> "Open weights"
+ - "Profilage" -> "Profiling" (mais "profiling" en français existe aussi)
+ - "Vendor lock-in" -> garder tel quel ou mettre "vendor lock-in" (c'est déjà dans le texte "des combinaisons
+   innombrables")
+ - "Conservation zéro" -> "Zero retention"
+ - "Règles" dans contexte juridique -> garder "lois"
+ - "Serveur" -> garder
+ - "Auto-hébergé" -> "Self-hosted"
+ - "Fine-tuning" -> déjà en anglais dans le slide "Définitions" : "modifier par fine-tuning"
+ - "Stack" -> garder
+ - "Benchmark gaming" -> garder
+ - "Bring your own model" -> garder BYOM
+ - "Routeurs et passerelles" -> "Routers et gateways" ou "Gateways and routers"
+
+ Mais "go for the simplest answer". Je ne vais pas sur-angliciser. Je vais juste les concepts très techniques.
+
+ Listons tous les "tu" et leurs contextes pour les transformer :
+
+ 1. "Protéger les données de ton IA" -> "Protéger les données de son IA" ou "Protéger les données de l'IA" ? En fait
+    le titre : "Protéger les données de ton IA : modèles locaux vs globaux". Je vais le changer en "Protéger les
+    données de l'IA" ou "Protéger ses données en IA". Ou utiliser "vous" ? "Protéger vos données en IA" - plus
+    direct. Mais le user dit utiliser "on" ou "vous". Le titre pourrait être "Protéger ses données face à l'IA" ou
+    "Protéger les données de son IA". Je vais mettre "Protéger les données de l'IA" ? Non, c'est ambigu. "Protéger
+    ses données en IA" est bien. Ou "Protéger ses données dans l'IA". Optons pour "Protéger ses données avec l'IA" ?
+    Non, c'est pas ça. "Protéger ses données face à l'IA" est mieux. Ou "Protéger ses données et son IA". Gardons
+    "son" car c'est impersonnel (on) : "Protéger les données de son IA".
+
+ 2. "Une bonne partie de tes données" -> "Une bonne partie de ses données" ou "de nos données" ou "de nos données".
+    "on" -> "nos". Mais avec "on", c'est notre ? Non, avec "on" c'est plutôt impersonnel. "Une bonne partie de nos
+    données" est ok avec on. "De ses données" est plus distant. Je vais utiliser "nos" quand "on" est le sujet, ou
+    reformuler.
+
+ En fait pour éviter les complications, je peux utiliser "vous" à la place de "tu". Mais le user dit "utiliser 'on'
+ ou 'vous' (si nécessaire)". "Vous" est plus facile car c'est juste la conjugaison et les possessifs qui changent.
+ Mais "on" est plus impersonnel. Dans une présentation, "on" marcherait mieux. "Vous" est direct.
+
+ Hmm, "go for the simplest answer". Utiliser "vous" est plus simple car c'est un remplacement direct de "tu" :
+ - tu -> vous
+ - ton/ta/tes -> votre/vos
+ - te -> vous
+
+ Ou utiliser "on" :
+ - tu -> on
+ - ton/ta/tes -> son/sa/ses
+ - te -> se
+
+ Mais "on" peut être bizarre avec certains verbes : "qui peut te consulter" -> "qui peut **t'**examiner? non. "qui
+ peut nous consulter"? ou "qu'on peut consulter"? Non, c'est "qui peut consulter" passif. "qui peut les consulter".
+
+ En fait, dans la phrase : "qui peut les consulter" (les données). Donc "te" n'est pas nécessaire.
+
+ Je vais utiliser "vous" partout car c'est plus simple pour une présentation orale (c'est le public). Mais le user
+ dit "l'impersonnel 'on' ou 'vous' (si nécessaire)". "Si nécessaire" suggère que "on" est préféré mais "vous"
+ accepté si besoin.
+
+ Bon, "go for the simplest answer". Je vais utiliser "on" quand c'est facile, et "vous" quand "on" rend la phrase
+ trop compliquée. En fait, utilisons "vous" pour tout remplacer "tu". C'est le plus simple et le plus naturel dans
+ une présentation devant un public.
+
+ Non attendez, le user dit "should not use the 'tu' version in french but the impersonal 'on' or 'vous' (if
+ needed)". Il y a une préférence pour "on" mais "vous" si nécessaire. Faisons "on" dans la plupart des cas, et
+ "vous" seulement quand "on" crée une ambiguïté.
+
+ Allons-y avec "on" en remplaçant bien :
+ - ton/ta/tes -> son/sa/ses (ou notre/nos selon le sens)
+ - te/t' -> se/s' (ou nous/nous-mêmes)
+
+ Exemples :
+ - "des données de ton IA" -> "des données de son IA" (ou "de **l'**IA")
+ - "tes données" -> "ses données" (ou "nos données" si on veut inclure l'audience)
+ - "te convient" -> "lui convient" (ou "nous convient")
+ - "tu en es propriétaire" -> "on en est propriétaire" ou "c'est notre propriété"
+ - "te permettant" -> "nous permettant" ou "lui permettant"
+
+ Ça va être un peu plat avec "ses/sa" pour tout. Utilisons "notre/nos" pour avoir le même sens d'inclusion que "on"
+ a souvent : "on" = "nous" dans le langage courant.
+
+ En français de présentation, "on" est souvent utilisé avec "nos" : "On protège nos données". Mais ce n'est pas
+ strictement grammatical. C'est acceptable dans un registre de présentation.
+
+ Je vais faire un mix :
+ - Utiliser "on" comme sujet
+ - Utiliser "ses/sa" pour le possessif impersonnel (ou "notre/nos" quand c'est naturel)
+
+ Exemples concrets du texte :
+
+ Titre : "Protéger les données de ton IA"
+ -> "Protéger les données de son IA" ou "Protéger ses données en IA" ou "Protéger ses données avec l'IA". Gardons
+ "son" : "Protéger les données de son IA"
+ Ou mieux : "Protéger ses données dans l'IA". C'est plus clair.
+
+ "Une bonne partie de tes données"
+ -> "Une bonne partie de ses données" (impersonnel)
+
+ "À quelle distance tes données voyagent-elles"
+ -> "À quelle distance ses données voyagent-elles"
+
+ "ton compte"
+ -> "son compte"
+
+ "tes propres règles"
+ -> "ses propres règles"
+
+ "te permettant"
+ -> "lui permettant" ou "nous permettant"
+
+ "tu peux télécharger"
+ -> "on peut télécharger"
+
+ Bon, ça va. Faisons cela.
+
+ Concepts à garder en anglais ou à angliciser :
+ - Vendor lock-in (dans "verrouillage par fournisseur") -> Mais "vendor lock-in" est un concept anglais très
+   répandu. Attendez, le texte dit déjà "vendor_lock_in.png", mais le chapitre s'appelle "Des combinaisons
+   innombrables" sans texte. Juste l'image.
+ - Open weights -> au lieu de "Modèle à poids ouverts" : "Modèle open weights" ? Ou "Modèle à open weights". Gardons
+   "Modèle à poids ouverts" -> "Modèle open weights"
+ - Zero retention -> au lieu de "Conservation zéro" : "Zero retention"
+ - Fine-tuning -> déjà présent
+ - Profiling -> au lieu de "Profilage" : "Profiling"
+ - Open-source -> déjà en anglais
+ - Self-hosted -> au lieu de "Auto-hébergé" : "Self-hosted"
+ - Stack -> gardons "stack"
+ - Benchmark gaming -> déjà en anglais
+ - BYOM -> déjà présent
+ - CLOUD Act -> déjà en anglais
+ - One-stop-shop -> déjà en anglais
+ - API -> déjà en anglais
+ - GPU -> déjà en anglais
+
+ "Le piège de l'option par défaut" -> "Le piège de l'option par défaut" c'est bien traduit. Ou "Le Default Trap"?
+ Non, trop.
+
+ "N'utilise pas seulement l'option par défaut" -> gardons.
+
+ "Ces ingénieurs utilisaient simplement le réglage par défaut" -> ok.
+
+ "Utilise ce qui te convient le mieux" -> "Utilise ce qui lui convient le mieux" ou "Utiliser ce qui nous convient
+ le mieux". En fait, cette slide est une conclusion. "Utiliser ce qui convient le mieux" (infinitif impersonnel).
+
+ En fait, la phrase d'ouverture et de fermeture est :
+
+ │ N'utilise pas seulement l'option par défaut.
+ │ Utilise ce qui te convient le mieux.
+
+ Je vais garder le mode impératif impersonnel :
+
+ │ N'utilisez pas seulement l'option par défaut.
+ │ Utilisez ce qui vous convient le mieux.
+
+ Mais le user veut "on" ou "vous". "Vous" est acceptable ici car c'est une recommandation directe au public.
+
+ Bon, je vais éditer le fichier. Ce serait trop long et risqué de tout faire en un seul edit avec des replacements
+ exacts. Je vais faire un write complet car j'ai les modifications multiples. Mais non, write écrase le fichier.
+ C'est acceptable car c'est un nouveau fichier. C'est plus simple et plus sûr que des centaines de petits edits.
+
+ Attendez, le fichier fait ~500 lignes. Un write est raisonnable. Je vais réécrire le fichier avec les corrections.
+ C'est la façon la plus simple pour éviter les erreurs de matching.
+
+ Je vais préparer le texte corrigé :
+
+ 1. Titre : "Protéger les données de son IA" (ou "Protéger ses données en IA") -> "Protéger ses données dans l'IA :
+    modèles locaux vs globaux"
+ 2. Toutes les instances de "tes" -> "ses" (ou "nos" selon le contexte)
+ 3. Toutes les instances de "tu " (suivi d'un verbe) -> "on " ou reformuler
+ 4. "te " -> "se " ou "nous " ou reformuler
+ 5. "ton/ta" -> "son/sa" ou "notre/notre"
+ 6. "te convient" -> "convient" (impersonnel)
+
+ Vérifions cas par cas :
+
+ - "Une bonne partie de tes données" -> "Une bonne partie de ses données" (car sujet "on" : "on a des données
+   sensibles")
+ - "elles risquent plus que jamais de fuiter" -> sujet = données. OK.
+ - "tes échanges" -> "ses échanges"
+ - "tes données" (en 2025 étude) -> "ses données"
+ - "tes brouillons" -> "ses brouillons" (l'affaire Navier-Stokes)
+ - "t'es propriétaire" -> "on en est propriétaire"
+ - "tes propres règles" -> "ses propres règles"
+
+ Slide "Qu'est-ce que la souveraineté des données ?" :
+ - "tes données" -> "ses données"
+ - "quand tu utilises" -> "quand on utilise"
+
+ Slide "Axe 1 : la distance" :
+ - "tes données" -> "ses données" (x2)
+
+ Slide "Axe 2 : la conservation" :
+ - "ta question" -> "sa question"
+ - "tes entrées" -> "ses entrées" (x2)
+ - "ton compte" -> "son compte"
+
+ Slide "Affaire Navier-Stokes" :
+ - OK (ce sont "leurs" données)
+
+ Slide "Axe 3 : la juridiction (1)" :
+ - "tes données" -> "nos données" (car c'est "tes propres règles" -> "nos propres règles")
+
+ Slide "Trois axes, une carte" :
+ - "choses qui ne devraient jamais quitter ton ordinateur" -> "quitter son ordinateur"
+ - "tout ce qui contient des noms" -> OK (pas de tu)
+
+ Slide "Définitions" :
+ - "que tu peux télécharger" -> "que l'on peut télécharger"
+ - "et modifier par fine-tuning" -> OK
+
+ Slide "Pourquoi 'local' n'est plus un compromis" -> OK
+
+ Slide "Ce que 'quatre mois de retard' signifie vraiment" -> OK
+
+ Slide "Peu coûteux" -> OK
+
+ Slide "Jalons à mi-2026" -> OK
+
+ Slide "Limites" -> OK
+
+ Slide "Panorama des services d'IA" -> OK
+
+ Slide "1. Auto-hébergé {auto-animate="true"}" (premier) :
+ - "Télécharge" -> "Télécharger" (infinitif)
+ - "Lance" -> "Lancer"
+
+ Slide "1. Auto-hébergé {auto-animate="true"}" (deuxième) -> OK
+
+ Slide "2. Cloud européen complet {auto-animate="true"}" (premier) :
+ - "permettent d'apporter ton propre modèle" -> "permettent d'apporter son propre modèle"
+
+ Slide "3. Néoclouds GPU" (premier) :
+ - "te permettant" -> "vous permettant" (ou "permettant")
+
+ Slide "4. Routeurs et passerelles" (premier) :
+ - "entre toi et plusieurs fournisseurs" -> "entre soi et plusieurs fournisseurs" (bizarre) ou "entre l'utilisateur
+   et plusieurs fournisseurs"
+
+ Slide "N'utilise pas seulement" -> "N'utilisez pas seulement"
+ Slide "Utilise ce qui te convient le mieux" -> "Utilisez ce qui vous convient le mieux"
+
+ Slide "Qui suis-je" -> "me" est dans le titre mais c'est correct car c'est "Qui suis-je" (présentation de soi).
+
+ Maintenant les termes anglais :
+
+ - "Profilage" -> "Profiling" (dans Axe 2)
+ - "Entraînement" -> Gardons comme ça en français, ou "Training" : je pense que "Entraînement" est bien en français
+   dans ce contexte IA.
+ - "Conservation zéro" -> "Zero retention" (c'est mieux en anglais, plus percutant et standard dans l'industrie)
+ - "Poids ouverts" -> "Open weights" (indispensable, c'est LE terme technique)
+ - "Verrouillage par fournisseur" -> "Vendor lock-in" (standard, et déjà dans la présentation de l'image)
+ - "Auto-hébergé" -> "Self-hosted" (terme standard)
+ - "Fine-tuning" -> déjà là
+
+ Et la scrollable :
+
+ Slides à rendre scrollable :
+ - ## Axe 2 : la conservation {auto-animate="true"} (la dernière avec 6 items) -> ## Axe 2 : la conservation
+   {.scrollable auto-animate="true"} ?
+   En fait dans Quarto, la syntaxe est ## Titre {.scrollable}. Pour auto-animate, on fait ## Titre
+   {auto-animate="true"}. On peut combiner : ## Titre {.scrollable auto-animate="true"}.
+ - ## 1. Auto-hébergé {auto-animate="true"} (la dernière avec ressources web) -> ## 1. Auto-hébergé {.scrollable
+   auto-animate="true"}
+ - ## 2. Cloud européen complet {auto-animate="true"} (la dernière avec liens) -> ## 2. Cloud européen complet
+   {.scrollable auto-animate="true"}
+ - Potentiellement ## Résumé {.scrollable} -> déjà fait.
+ - ## Axe 3 : la juridiction (4) est assez courte.
+ - ## Limites courte.
+ - ## Panorama des services d'IA a 5 items fragmentés, ça devrait aller.
+
+ Vérifions si .scrollable est compatible avec auto-animate. En théorie oui. Mais il faut tester mentalement : la
+ slide précédente n'a pas scrollable, la suivante si. L'animation va essayer de faire matcher les blocs. Les blocs
+ sont différents (colonne gauche/droite, listes, etc.) donc l'auto-animate est principalement pour les éléments
+ persistent (titre, sous-titres). Cela devrait être ok.
+
+ En fait, dans la série "Axe 2 : la conservation", le texte "Que devient ta question une fois que le modèle l'a lue
+ ?" est sur les slides 2-3-4 (les dernières). Je vais mettre .scrollable sur les slides de cette série qui ont
+ beaucoup de contenu, à savoir la 3ème (avec image) et la 4ème (avec 6 items). Mais mettre scrollable sur la 3ème
+ (image) n'est pas nécessaire car l'image prend de la place. La 4ème a le plus de texte.
+
+ Mais attention, auto-animate fonctionne mieux quand les slides successives ont la même structure. Si j'ajoute
+ .scrollable seulement à la dernière, c'est ok car c'est un attribut CSS sur le slide container. L'animation ne
+ devrait pas être affectée.
+
+ Pour "1. Auto-hébergé" (la troisième avec ressources) : plein de liens. .scrollable est utile.
+ Pour "2. Cloud européen complet" (deuxième avec liens) : plein de liens de 8+ fournisseurs. .scrollable est utile.
+
+ Voyons aussi "Trois axes, une carte" (la dernière avec texte sur défense/classifié). Elle n'est pas si longue.
+
+ Écrivons le fichier complet avec les modifications.

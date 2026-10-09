@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Vestin Hategekimana">
+  <meta name="dcterms.date" content="2026-10-09">
+  <title>Protéger les données des IAs : modèles locaux vs globaux</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0c32612694e24334eb016c852bdff153.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Protéger les données des IAs : modèles locaux vs globaux</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Vestin Hategekimana
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:info.wedata.ch">info.wedata.ch</a>
+</div>
+        <p class="quarto-title-affiliation">
+            WeData
+          </p>
+    </div>
+</div>
+
+  <p class="date">2026-10-09</p>
+</section>
+<section id="qui-suis-je" class="slide level2 center">
+<h2>Qui suis-je</h2>
+<p><img data-src="image/pp.jpeg" class="absolute" style="top: -100px; right: 100px; height: 200px; "></p>
+<h3 id="vestin-hategekimana">Vestin Hategekimana</h3>
+<ul>
+<li><p><strong>Doctorant en démographie</strong>, <a href="https://www.unige.ch/sciences-societe/ideso/membres/vestin-hategekimana">Université de Genève</a></p></li>
+<li><p><strong>Président</strong>, <a href="https://wedata.ch/">WeData</a></p></li>
+<li><p><strong>Vice-président, responsable régional</strong>, <a href="https://youngaileaders.ch/">Young AI Leaders Genève</a></p></li>
+</ul>
+</section>
+<section id="lessentiel-à-retenir" class="slide level2 center">
+<h2>L’essentiel à retenir</h2>
+<p><br></p>
+<div class="fragment">
+<blockquote>
+<p>N’utilisons <strong>pas seulement</strong> l’<strong>option par défaut</strong>.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Utilisons ce qui nous convient <strong>le mieux</strong>.</p>
+</blockquote>
+</div>
+<p><br></p>
+</section>
+<section id="un-choix-immense" class="slide level2 center">
+<h2>Un choix immense</h2>
+
+<img data-src="image/generative-ai-tools.jpg" class="r-stretch"><p><small><a href="https://theresanaiforthat.com/">There is an AI for that</a></small></p>
+</section>
+<section id="des-combinaisons-innombrables" class="slide level2 center">
+<h2>Des combinaisons innombrables</h2>
+
+<img data-src="image/vendor_lock-in.png" class="r-stretch"></section>
+<section id="pourquoi-surveiller-ses-données-à-lère-de-lia" class="slide level2 center">
+<h2>Pourquoi surveiller ses données à l’ère de l’IA ?</h2>
+<div class="fragment">
+<ul>
+<li>Une bonne partie des données est vraiment sensible</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Aujourd’hui, elles risquent plus que jamais de fuiter par accident <small>Contrat de confidentialité, Shadow AI, souvereignty washing</small></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Les données sont le nouvel or <br> <small>Entraînement des IA</small></li>
+</ul>
+</div>
+</section>
+<section>
+<section id="le-piège-de-loption-par-défaut" class="title-slide slide level1 center">
+<h1>Le piège de l’option par défaut</h1>
+
+</section>
+<section id="mars-2023-samsung-hwaseong" class="slide level2 center" data-background-color="#3C444D">
+<h2>Mars 2023, Samsung, Hwaseong</h2>
+
+<img data-src="image/samsung_incident.png" class="r-stretch"><p><br></p>
+<p><small><a href="https://incidentdatabase.ai/cite/768">AI Incident Database, 2 mai 2023</a></small> | <small><a href="https://www.bankruptbyai.com/case-files/samsung-code-leak">Bankrupt by AI, 30 mars 2023</a></small></p>
+</section>
+<section id="ils-nétaient-pas-négligents" class="slide level2 center" data-background-color="#3C444D">
+<h2>Ils n’étaient pas négligents</h2>
+<div class="fragment">
+<p>Ces ingénieurs utilisaient simplement le <strong>réglage par défaut</strong>.</p>
+</div>
+<div class="fragment">
+<blockquote>
+<p><strong>Le choix leur avait été imposé.</strong></p>
+</blockquote>
+</div>
+<p><small><a href="https://lumichats.com/blog/chatgpt-claude-gemini-training-your-data-2026-privacy-guide">You Pay $20/Month. ChatGPT Still Trains on You</a></small></p>
+</section>
+<section id="octobre-2025-étude-de-stanford" class="slide level2 center" data-background-color="#3C444D">
+<h2>Octobre 2025 : étude de Stanford</h2>
+<div class="fragment">
+<blockquote>
+<p><strong>6 entreprises sur 6</strong> parmi les grands chatbots américains forment leurs modèles sur tes échanges par défaut</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Certaines conservent tes données <strong>sans limite de temps</strong>.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>La documentation sur la confidentialité est <strong>souvent floue</strong>.</p>
+</blockquote>
+</div>
+<p><br></p>
+<p><small><a href="https://news.stanford.edu/stories/2025/10/ai-chatbot-privacy-concerns-risks-research">Stanford HAI, octobre 2025. Amazon, Anthropic, Google, Meta, Microsoft, OpenAI : environ 90 % du marché américain des chatbots</a></small></p>
+</section>
+<section id="chatgpt-de-2023-à-aujourdhui" class="slide level2 center" data-background-color="#3C444D">
+<h2>ChatGPT de 2023 à aujourd’hui</h2>
+
+<img data-src="image/chatgpt-data-controls-settings-before-and-after.webp" class="r-stretch"><p><small><a href="https://beebom.com/chatgpt-disable-model-training-retain-chat-history/">OpenAI Finally Relents; You Can Disable Model Training in ChatGPT While Retaining Chat History</a></small></p>
+</section>
+<section id="deux-catégories-dutilisateurs" class="slide level2 center" data-background-color="#3C444D">
+<h2>Deux catégories d’utilisateurs</h2>
+<p><strong>Utilisation des données pour l’entraînement</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>DÉSACTIVÉ</strong> par défaut</p>
+<ul>
+<li>ChatGPT Business</li>
+<li>ChatGPT Enterprise</li>
+<li>ChatGPT Edu</li>
+<li>API Platform</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>ACTIVÉ</strong> par défaut</p>
+<ul>
+<li>ChatGPT Free</li>
+<li>ChatGPT Plus</li>
+<li>ChatGPT Pro</li>
+</ul>
+</div></div>
+<p><small><a href="https://help.openai.com/en/articles/8983130-what-if-i-want-to-keep-my-history-on-but-disable-model-training">Centre d’aide OpenAI, “What if I want to disable model training?”</a></small></p>
+</section>
+<section id="les-débuts" class="slide level2 center" data-background-color="#3C444D">
+<h2>Les débuts</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p><img data-src="image/chatgpt_disclaimer.png"></p>
+</div><div class="column" style="width:30%;">
+<div class="fragment">
+<blockquote>
+<p>Aujourd’hui, tout est noyé sous des pages entières de <strong>documents juridiques</strong></p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Pratique pour un <strong>consentement silencieux</strong></p>
+</blockquote>
+</div>
+</div></div>
+<p><small><a href="https://www.chino.io/post/chatgpt-privacy-risks">https://www.chino.io/post/chatgpt-privacy-risks</a></small></p>
+</section>
+<section id="x-et-linkedin" class="slide level2 center" data-background-color="#3C444D">
+<h2>X et LinkedIn</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="image/X_data_training.webp"></p>
+</div><div class="column" style="width:70%;">
+<p><img data-src="image/linkedin_data_training.webp"></p>
+</div></div>
+<p><small><a href="https://www.malwarebytes.com/blog/news/2025/09/linkedin-will-use-your-data-to-train-its-ai-unless-you-opt-out-now">LinkedIn will use your data to train its AI unless you opt out now, septembre 2025</a></small> | <small><a href="https://www.socialmediatoday.com/news/x-opt-out-of-sharing-your-data-to-train-grok/722601/">X Adds New Setting To Opt out of Sharing Data To Train Grok</a></small></p>
+</section>
+<section id="et-alors" class="slide level2 center">
+<h2>Et alors ?</h2>
+<p>Le problème n’est pas l’entraînement sur les données…</p>
+<div class="fragment">
+<blockquote>
+<p>Mais le <strong>consentement silencieux</strong></p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Et les <strong>pratiques de conservation</strong></p>
+</blockquote>
+</div>
+</section></section>
+<section>
+<section id="la-souveraineté-des-données" class="title-slide slide level1 center">
+<h1>La souveraineté des données</h1>
+
+</section>
+<section id="quest-ce-que-la-souveraineté-des-données" class="slide level2 center">
+<h2>Qu’est-ce que la souveraineté des données ?</h2>
+<blockquote>
+<p>C’est la capacité à contrôler <strong>où vont tes données</strong>, qui peut les consulter, et <strong>quelles lois s’appliquent</strong> quand tu utilises l’intelligence artificielle.</p>
+</blockquote>
+<p><br></p>
+<div class="fragment">
+<p><strong>Souveraineté des données</strong> &gt; <strong>Souveraineté technologique</strong></p>
+</div>
+</section>
+<section id="trois-axes" class="slide level2 center">
+<h2>Trois axes</h2>
+<ol type="1">
+<li><strong>(Distance) À quelle distance tes données voyagent-elles physiquement ?</strong></li>
+<li><strong>(Conservation) Que devient ta question une fois que le modèle l’a lue ?</strong></li>
+<li><strong>(Juridiction) Quelles lois pourraient obliger à divulguer tes données ?</strong></li>
+</ol>
+</section>
+<section id="axe-1-la-distance" class="slide level2 center">
+<h2>Axe 1 : la distance</h2>
+<p><strong>À quelle distance les données voyagent-elles physiquement ?</strong></p>
+<div class="fragment">
+<ol type="1">
+<li><strong>Serveur étranger</strong> : propriété d’une entreprise soumise à des lois qu’on n’a jamais votées</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li><strong>Serveur européen</strong> : géré par une entreprise qu’on a choisie</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li><strong>Local</strong> : On en est propriétaire</li>
+</ol>
+</div>
+</section>
+<section id="axe-2-la-conservation" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Axe 2 : la conservation</h2>
+<p>Que devient notre requête une fois que le modèle l’a lue ?</p>
+<div class="fragment">
+<ol type="1">
+<li><strong>Profilage</strong> : les entrées construisent un dossier lié à notre compte</li>
+</ol>
+</div>
+</section>
+<section id="axe-2-la-conservation-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Axe 2 : la conservation</h2>
+<p>Que devient notre requête une fois que le modèle l’a lue ?</p>
+<ol type="1">
+<li><strong>Profilage</strong> : les entrées construisent un dossier longitudinal lié à notre compte</li>
+</ol>
+
+<img data-src="image/chatgpt_ads.png" class="r-stretch"></section>
+<section id="axe-2-la-conservation-2" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Axe 2 : la conservation</h2>
+<p>Que devient notre requête une fois que le modèle l’a lue ?</p>
+<ol type="1">
+<li><p><strong>Profilage</strong> : les entrées construisent un dossier lié à notre compte</p></li>
+<li><p><strong>Entraînement</strong> : ce ne sont plus nos données, elles font partie des poids de quelqu’un d’autre</p></li>
+</ol>
+<div class="fragment">
+<ol start="3" type="1">
+<li><strong>Stockées mais inutilisées</strong> : journalisées pour la surveillance des abus, susceptibles d’être demandées par des tiers</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="4" type="1">
+<li><strong>Stockées et chiffrées</strong> : seul l’utilisateur peut lire les données</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="5" type="1">
+<li><strong>Conservation zéro</strong> : les données ne servent que pour l’inférence, puis sont effacées ; l’historique reste en local</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="6" type="1">
+<li><strong>Local</strong> : aucune donnée ne quitte notre machine</li>
+</ol>
+</div>
+</section>
+<section id="laffaire-de-priorité-navier-stokes" class="slide level2 center" data-background-color="#3C444D">
+<h2>L’affaire de priorité Navier-Stokes</h2>
+<div class="fragment">
+<ol type="1">
+<li>Deux mathématiciens, <strong>Buckmaster</strong> et <strong>Alpöge</strong>, ont passé un an sur une démonstration liée au prix du millénaire de Navier-Stokes.</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Leurs brouillons de travail ont été intégrés dans l’outil <strong>Codex</strong> d’OpenAI.</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li>Le <em>8 septembre 2026</em>, les agents d’OpenAI ont publié une revendication sur le même problème, <strong>douze heures après</strong> que l’un des mathématiciens ait publié son propre résultat.</li>
+</ol>
+</div>
+<div class="fragment">
+<blockquote>
+<p>OpenAI a nié l’accès direct aux fichiers, mais a admis que son IA avait été entraînée dessus</p>
+</blockquote>
+</div>
+<p><small><a href="https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy">Navier-Stokes priority controversy Wikipedia</a></small></p>
+</section>
+<section id="axe-3-la-juridiction-1" class="slide level2 center">
+<h2>Axe 3 : la juridiction (1)</h2>
+<p><strong>Quelles lois pourraient obliger à divulguer nos données ?</strong></p>
+<div class="fragment">
+<ol type="1">
+<li><strong>Règles étrangères</strong> : le Cloud Act américain ou la loi chinoise sur la cybersécurité</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li><strong>Règles européennes</strong> : le règlement général sur la protection des données (RGPD)</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li><strong>Local</strong> : nos propres règles ou celles de notre institution</li>
+</ol>
+</div>
+</section>
+<section id="axe-3-la-juridiction-2" class="slide level2 center">
+<h2>Axe 3 : la juridiction (2)</h2>
+<p><strong>Le CLOUD Act, 2018 (États-Unis)</strong> :</p>
+<blockquote>
+<p>un fournisseur américain doit remettre les données, <strong>“qu’elles se trouvent à l’intérieur ou à l’extérieur des États-Unis”.</strong></p>
+</blockquote>
+<div class="fragment">
+<p>Ce qui compte, c’est <strong>qui contrôle le fournisseur</strong>, l’emplacement du serveur n’a aucune valeur légale.</p>
+</div>
+<p><small><a href="https://uslawexplained.com/cloud_act">The CLOUD Act: A Plain-English Guide to Your Data &amp; Government Access</a></small></p>
+</section>
+<section id="axe-3-la-juridiction-3" class="slide level2 center">
+<h2>Axe 3 : la juridiction (3)</h2>
+<p><strong>La loi sur la cybersécurité, 2017 (Chine)</strong></p>
+<blockquote>
+<p>les fournisseurs doivent coopérer avec les enquêtes de sécurité d’État, <strong>fournir un support technique et des capacités de déchiffrement</strong>, et stocker les “données importantes” <strong>sur des serveurs situés en Chine</strong>.</p>
+</blockquote>
+<div class="fragment">
+<p>Ici, le lieu du serveur a de l’importance : il doit être <strong>physiquement en Chine</strong> pour la plupart des tâches d’IA.</p>
+</div>
+<p><small><a href="https://en.wikipedia.org/wiki/Cybersecurity_Law_of_the_People%27s_Republic_of_China">Cybersecurity Law of the People’s Republic of China - wiki</a></small></p>
+</section>
+<section id="axe-3-la-juridiction-4" class="slide level2 center">
+<h2>Axe 3 : la juridiction (4)</h2>
+<p><strong>Règlement général sur la protection des données (RGPD)</strong></p>
+<blockquote>
+<p>Exige que les données <strong>restent dans l’EEE</strong> (ou disposent de mécanismes de transfert spécifiques) et <strong>limitent les transferts</strong> vers des pays sans protection “adéquate”.</p>
+</blockquote>
+<div class="fragment">
+<p>Une entreprise peut être <strong>100 % conforme au RGPD</strong> (avec un DPA public, des politiques de conservation zéro, et du personnel européen) mais <strong>rester soumise au CLOUD Act américain</strong> si elle a une maison mère aux États-Unis</p>
+</div>
+</section>
+<section id="trois-axes-une-carte" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/all_circles.png"></p>
+</div><div class="column">
+<p><strong>Les trois axes se chevauchent</strong></p>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/first_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Local</strong></p>
+<ul>
+<li>Aucun problème de <strong>distance</strong></li>
+<li>Aucun problème de <strong>conservation</strong></li>
+<li>Aucun problème de <strong>juridiction</strong></li>
+</ul>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-2" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/first_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Défense, secrets d’État, classifié</strong></p>
+<p>Données sensibles, choses qui ne devraient jamais quitter ton ordinateur, …</p>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-3" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/second_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Serveur européen</strong></p>
+<ul>
+<li><strong>Faible distance</strong></li>
+<li>La <strong>conservation</strong> devient importante</li>
+<li>Risque d’être confronté au <strong>CLOUD Act</strong></li>
+</ul>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-4" class="slide level2 scrollable center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/second_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Données personnelles (RGPD standard)</strong></p>
+<p>Données clients, données employés, tout ce qui contient des noms</p>
+<p><strong>Données réglementées</strong></p>
+<p>Données de santé, secret bancaire, secret professionnel, enquêtes RH <small>Conservation zéro</small></p>
+<p><strong>Propriété intellectuelle</strong></p>
+<p>Code source, designs non publiés, l’affaire Samsung <small>chiffrement / conservation zéro</small></p>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-5" class="slide level2 scrollable center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/third_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Serveur étranger</strong></p>
+<ul>
+<li><strong>Grande distance</strong></li>
+<li>La <strong>conservation</strong> compte</li>
+<li>Soit le <strong>CLOUD Act</strong>, soit la <strong>loi chinoise sur la cybersécurité</strong> s’appliquent</li>
+</ul>
+</div></div>
+</section>
+<section id="trois-axes-une-carte-6" class="slide level2 scrollable center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Trois axes, une carte</h2>
+<div class="columns">
+<div class="column">
+<p><img data-src="image/third_inner_circle.png"></p>
+</div><div class="column">
+<p><strong>Données déjà publiques.</strong></p>
+<p>Brouillons de contenu marketing, documentation publiée, recherche générique, …</p>
+<p><strong>Internes, non personnelles, non secrètes</strong></p>
+<p>Comptes rendus de réunion qui seront publiés de toute façon, communications internes sans importance critique.</p>
+</div></div>
+</section></section>
+<section>
+<section id="modèles-locaux-et-open-weight" class="title-slide slide level1 center">
+<h1>Modèles locaux et open-weight</h1>
+
+</section>
+<section id="définitions" class="slide level2 center">
+<h2>Définitions</h2>
+<p><strong>Modèle open-weight</strong></p>
+<blockquote>
+<p>Modèle gratuit téléchargeable et utilisable, et modifiable par fine-tuning. (Llama, Qwen, Kimi, GLM, …)</p>
+</blockquote>
+<div class="fragment">
+<p><strong>Open-weight</strong> &gt; <strong>Open-source</strong> (+ données et étapes documentées)</p>
+</div>
+<div class="fragment">
+<p><strong>Modèle fermé</strong></p>
+<blockquote>
+<p>Propriété d’une entreprise, le modèle est non transparent. (GPT, Claude, Grok, …)</p>
+</blockquote>
+</div>
+</section>
+<section id="pourquoi-local-nest-plus-un-compromis" class="slide level2 center">
+<h2>Pourquoi “local” n’est plus un compromis</h2>
+<ol type="1">
+<li><strong>Vraiment bon</strong></li>
+<li><strong>Peu coûteux</strong></li>
+<li><strong>Accessible</strong></li>
+</ol>
+</section>
+<section id="lécart-aujourdhui-4-mois" class="slide level2 center">
+<h2>L’écart aujourd’hui (4 mois)</h2>
+
+<img data-src="image/open_weight_gap.png" class="r-stretch"><p><small><a href="https://epoch.ai/data-insights/open-closed-eci-gap">Epoch AI (mai 2026)</a></small></p>
+</section>
+<section id="ce-que-quatre-mois-de-retard-signifie-vraiment" class="slide level2 center">
+<h2>Ce que “quatre mois de retard” signifie vraiment</h2>
+<p><strong>Avant</strong> : “Comme GPT-3 vs GPT-5” - des ères différentes</p>
+<p><strong>Maintenant</strong> : “Comme GPT-5 vs GPT-5.5” - la même ère, une version mineure</p>
+<p><small><a href="https://epoch.ai/data-insights/open-closed-eci-gap">Epoch AI (mai 2026)</a></small></p>
+</section>
+<section id="peu-coûteux-1" class="slide level2 center">
+<h2>Peu coûteux (1)</h2>
+
+<img data-src="image/Cost_per_Intelligence_Index_Task.png" class="r-stretch"><p><small><a href="https://artificialanalysis.ai/">Independent analysis of AI - Artificial Analysis</a></small></p>
+</section>
+<section id="peu-coûteux-2" class="slide level2 center">
+<h2>Peu coûteux (2)</h2>
+
+<img data-src="image/Intelligence_Index_vs_Cost_per_Intelligence_Index_Task.png" class="r-stretch"><p><small><a href="https://artificialanalysis.ai/">Independent analysis of AI - Artificial Analysis</a></small></p>
+</section>
+<section id="jalons-à-mi-2026" class="slide level2 center">
+<h2>Jalons à mi-2026</h2>
+<p><strong>Kimi K3</strong> - <em>Le plus grand modèle ouvert jamais créé</em></p>
+<p><strong>Qwen3.8-27B</strong> - <em>Un seul GPU grand public</em></p>
+<p><strong>GLM5.3</strong> - <em>Max : performances de pointe, Flash : rapide et vraiment bon marché</em></p>
+</section>
+<section id="limites" class="slide level2 center">
+<h2>Limites</h2>
+<p><strong>1. Le moins cher par token &gt; le moins cher par tâche</strong></p>
+<p><strong>2. Les benchmarks peuvent avantager les modèles ouverts (benchmark gaming)</strong></p>
+<p><strong>3. L’utilisation d’outils agentiques reste un écart</strong></p>
+</section></section>
+<section>
+<section id="les-options" class="title-slide slide level1 center">
+<h1>Les options</h1>
+
+</section>
+<section id="panorama-des-services-dia" class="slide level2 center">
+<h2>Panorama des services d’IA</h2>
+<div class="fragment">
+<p><strong>1. Auto-hébergé</strong> : contrôle absolu, ton matériel. Aucune donnée ne sort.</p>
+</div>
+<div class="fragment">
+<p><strong>2. Cloud européen complet</strong> : propriétaires européens, stack européen.</p>
+</div>
+<div class="fragment">
+<p><strong>3. Neoclouds GPU</strong> : calcul européen ou hybride, <strong>on apporte nos propres modèles</strong>. La juridiction varie.</p>
+</div>
+<div class="fragment">
+<p><strong>4. Routeurs et passerelles</strong> : une enveloppe juridique européenne, plusieurs modèles en dessous.</p>
+</div>
+<div class="fragment">
+<p><strong>5. Hyperscaleurs masqués</strong> : un masque européen sur une infrastructure américaine.</p>
+</div>
+</section>
+<section id="auto-hébergé" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">1. Auto-hébergé</h2>
+<ul>
+<li><p>Télécharge l’outil</p></li>
+<li><p>Télécharge le modèle</p></li>
+<li><p>Lance tout en local</p></li>
+</ul>
+<p><small><a href="https://ollama.com">Ollama</a></small> | <small><a href="https://lmstudio.ai/">LM Studio</a></small> | <small><a href="https://docs.vllm.ai">vLLM</a></small> | <small><a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a></small> | <small><a href="https://www.sglang.io/">SGLang</a></small></p>
+</section>
+<section id="auto-hébergé-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">1. Auto-hébergé</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Souveraineté absolue</li>
+<li>Pas de “Vendor Lock-In”</li>
+<li>Coûts prévisibles</li>
+</ul>
+</div><div class="column">
+<p><strong>Inconvénients :</strong></p>
+<ul>
+<li>Barrière matérielle</li>
+<li>Barrière technique</li>
+</ul>
+</div></div>
+<p><small><a href="https://ollama.com">Ollama</a></small> | <small><a href="https://lmstudio.ai/">LM Studio</a></small> | <small><a href="https://docs.vllm.ai">vLLM</a></small> | <small><a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a></small> | <small><a href="https://www.sglang.io/">SGLang</a></small></p>
+</section>
+<section id="auto-hébergé-2" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">1. Auto-hébergé</h2>
+<p><strong>Ressources pour démarrer avec les modèles locaux</strong></p>
+<ul>
+<li><a href="blog.starmorph.com/blog/local-llm-inference-tools-guide">Local LLM Inference in 2026: The Complete Guide to Tools</a></li>
+<li><a href="itsthatlady.dev/blog/beginners-guide-to-local-ai">A Beginner’s Guide to Running AI Models Locally</a></li>
+<li><a href="willitrunai.com/blog/getting-started-local-ai">Getting Started with Local AI: Run LLMs on Your Own Hardware</a></li>
+<li><a href="https://whysogeek.com/vllm-ollama-llamacpp-which-inference-engine-2026/">vLLM vs Ollama vs llama.cpp: Local Inference in 2026</a></li>
+<li><a href="llmconfigurator.com/en/guides/coding-agents/setup-local-coding-agent">How to Run a Local AI Coding Agent</a></li>
+<li><a href="unsloth.ai/docs">Unsloth documentation</a></li>
+</ul>
+</section>
+<section id="cloud-européen-complet" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">2. Cloud européen complet</h2>
+<p>Infrastructure de propriété européenne proposant des endpoints d’IA natifs, et certains permettent d’apporter notre propre modèle.</p>
+</section>
+<section id="cloud-européen-complet-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">2. Cloud européen complet</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Sécurité juridictionnelle</li>
+<li>Transparence de la stack technique</li>
+<li>Conformité</li>
+</ul>
+</div><div class="column">
+<p><strong>Inconvénients :</strong></p>
+<ul>
+<li>Variété des modèles faible</li>
+<li>Prix &gt; Hypescaler étrangers</li>
+<li>Petit écosystème</li>
+</ul>
+</div></div>
+<p><small><a href="https://www.infomaniak.com/en/hosting/ai-services">Infomaniak</a></small> | <small><a href="https://www.ovhcloud.com/en/public-cloud/ai-endpoints">OVHcloud</a></small> | <small><a href="https://www.scaleway.com/en/generative-apis">Scaleway</a></small> | <small><a href="https://stackit.com/en/products/data-ai/stackit-ai-model-serving">STACKIT</a></small> | <small><a href="https://www.t-cloud-public.com/en/solutions/use-cases/artificial-intelligence/ai-foundation-services">T Cloud Public</a></small> | <small><a href="https://en.outscale.com">OUTSCALE</a></small> | <small><a href="https://www.cloud-temple.com/en/products/large-language-model-as-a-service-llmaas">Cloud Temple</a></small> | <small><a href="https://numspot.com/en">NumSpot</a></small> | <small><a href="https://cloud.ionos.com/managed/ai-model-hub">IONOS</a></small> | <small><a href="https://www.exoscale.com/ai-cloud-infrastructure/managed-inference">Exoscale</a></small></p>
+</section>
+<section id="neoclouds-gpu" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">3. Neoclouds GPU</h2>
+<p>Fournisseurs de calcul spécialisés sur la puissance GPU brute, souvent en permettant d’apporter notre propre modèle (BYOM).</p>
+<p><small><a href="https://verda.com">Verda</a></small> | <small><a href="https://tokenfactory.nebius.com">Nebius</a></small> | <small><a href="https://www.nscale.com">Nscale</a></small> | <small><a href="https://cloudferro.com">CloudFerro</a></small> | <small><a href="https://berget.ai/en">Berget AI</a></small> <small>(juridiction britannique)</small></p>
+</section>
+<section id="neoclouds-gpu-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">3. Neoclouds GPU</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Bon rapport qualité-prix (moins cher)</li>
+<li>Flexibilité (choix)</li>
+<li>Scalabilité</li>
+</ul>
+</div><div class="column">
+<p><strong>Inconvénients :</strong></p>
+<ul>
+<li>Risque juridictionnel (Cloud Act)</li>
+<li>Besoin de gestion</li>
+</ul>
+</div></div>
+<p><small><a href="https://verda.com">Verda</a></small> | <small><a href="https://tokenfactory.nebius.com">Nebius</a></small> | <small><a href="https://www.nscale.com">Nscale</a></small> | <small><a href="https://cloudferro.com">CloudFerro</a></small> | <small><a href="https://berget.ai/en">Berget AI</a></small> <small>(juridiction britannique)</small></p>
+</section>
+<section id="routeurs-et-passerelles" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">4. Routeurs et passerelles</h2>
+<p>Services qui s’intercalent entre l’utilisateur et plusieurs fournisseurs en arrière-plan, en routant les requêtes selon nos règles (généralement).</p>
+<p><small><a href="https://cortecs.ai">cortecs</a></small> | <small><a href="https://textcortex.com/eu-ai-models/openrouter-alternative-europe">TextCortex</a></small> | <small><a href="https://www.requesty.ai/eu">Requesty</a></small></p>
+</section>
+<section id="routeurs-et-passerelles-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">4. Routeurs et passerelles</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Interface unifiée (API unique)</li>
+<li>Optimisation (routeur dynamique)</li>
+</ul>
+</div><div class="column">
+<p><strong>Inconvénients :</strong></p>
+<ul>
+<li>Risque de sovereignty washing</li>
+<li>Confiance, toujours vérifier</li>
+</ul>
+</div></div>
+<p><small><a href="https://cortecs.ai">cortecs</a></small> | <small><a href="https://textcortex.com/eu-ai-models/openrouter-alternative-europe">TextCortex</a></small> | <small><a href="https://www.requesty.ai/eu">Requesty</a></small></p>
+</section>
+<section id="hyperscaleurs" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">5. Hyperscaleurs</h2>
+<p><small><a href="https://s3ns.io">S3NS</a></small> | <small><a href="https://www.bleucloud.fr">Bleu</a></small> | <small><a href="https://www.aws.eu">AWS European Sovereign Cloud</a></small> | <small><a href="https://www.microsoft.com/en-us/trust-center/privacy/european-data-boundary-eudb">Azure EU Data Boundary</a></small></p>
+</section>
+<section id="hyperscaleurs-1" class="slide level2 center" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">5. Hyperscaleurs</h2>
+<div class="columns">
+<div class="column">
+<p><strong>Avantages :</strong></p>
+<ul>
+<li>Performances (pointe)</li>
+<li>Écosystème (bonne intégration)</li>
+<li>Échelle</li>
+</ul>
+</div><div class="column">
+<p><strong>Inconvénients :</strong></p>
+<ul>
+<li>Peu de contrôle (États-Unis, Chine)</li>
+<li>Dépendance</li>
+</ul>
+</div></div>
+<p><small><a href="https://s3ns.io">S3NS</a></small> | <small><a href="https://www.bleucloud.fr">Bleu</a></small> | <small><a href="https://www.aws.eu">AWS European Sovereign Cloud</a></small> | <small><a href="https://www.microsoft.com/en-us/trust-center/privacy/european-data-boundary-eudb">Azure EU Data Boundary</a></small></p>
+</section>
+<section id="résumé" class="slide level2 scrollable center">
+<h2>Résumé</h2>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Catégorie</th>
+<th style="text-align: left;">Options</th>
+<th style="text-align: left;">Distance (flux de données)</th>
+<th style="text-align: left;">Conservation (ce qu’ils gardent)</th>
+<th style="text-align: left;">Juridiction (bouclier légal)</th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1. Auto-hébergé</strong></td>
+<td style="text-align: left;">Ollama, LM Studio, vLLM, llama.cpp, SGLang</td>
+<td style="text-align: left;"><strong>Local</strong> (ta machine)</td>
+<td style="text-align: left;"><strong>Zéro</strong> (sauf si tu actives l’historique / les journaux)</td>
+<td style="text-align: left;"><strong>Ta juridiction</strong> (contrôle physique)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2. Cloud EU complet</strong></td>
+<td style="text-align: left;">OVHcloud, Scaleway, STACKIT, T Cloud Public, OUTSCALE, Cloud Temple, NumSpot, IONOS, Exoscale, Infomaniak</td>
+<td style="text-align: left;"><strong>UE</strong> (les données restent dans des centres en UE)</td>
+<td style="text-align: left;"><strong>Configurable</strong> (la plupart proposent “conservation zéro” ou des options strictes “pas d’entraînement” ; vérifier le SLA spécifique)</td>
+<td style="text-align: left;"><strong>UE</strong> (protégé du Cloud Act ; géré par des tribunaux européens)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3. Néoclouds GPU</strong></td>
+<td style="text-align: left;">Verda, Nebius, Nscale, CloudFerro, Berget AI</td>
+<td style="text-align: left;"><strong>UE / Royaume-Uni</strong> (varie selon la région choisie)</td>
+<td style="text-align: left;"><strong>Variable</strong> (souvent conservation zéro pour l’inférence ; vérifier les politiques d’entraînement)</td>
+<td style="text-align: left;"><strong>Mixte</strong> (Nebius / Verda / CloudFerro : UE ; <strong>Berget AI : Royaume-Uni</strong>)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4. Routeurs &amp; passerelles</strong></td>
+<td style="text-align: left;">cortecs, TextCortex, Requesty</td>
+<td style="text-align: left;"><strong>UE</strong> (couche de routage en UE)</td>
+<td style="text-align: left;"><strong>Configurable</strong> (modes de conservation zéro disponibles)</td>
+<td style="text-align: left;"><strong>UE</strong> (natif RGPD, mais <em>dépend du fournisseur en amont</em>)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5. Hyperscaleurs masqués</strong></td>
+<td style="text-align: left;">S3NS, Bleu, AWS EC, Azure EUD</td>
+<td style="text-align: left;"><strong>UE</strong> (données physiquement en UE)</td>
+<td style="text-align: left;"><strong>Variable</strong> (souvent conservées pour l’amélioration des modèles sauf désabonnement)</td>
+<td style="text-align: left;"><strong>États-Unis / mondial</strong> (maison mère soumise au Cloud Act)</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lessentiel-à-retenir-1" class="slide level2 center">
+<h2>L’essentiel à retenir</h2>
+<p><br></p>
+<div class="fragment">
+<blockquote>
+<p>N’utilisons <strong>pas seulement</strong> l’<strong>option par défaut</strong>.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Utilisons ce qui nous convient <strong>le mieux</strong>.</p>
+</blockquote>
+</div>
+<p><br></p>
+</section></section>
+<section id="merci-de-votre-attention" class="title-slide slide level1 center">
+<h1>Merci de votre attention</h1>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="wedata-logo-margin.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
